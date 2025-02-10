@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reCAPTCHA Example</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Le2y9IqAAAAADBBkAO5nLuAmLB7TU9S6FG0PYtU"></script>
+</head>
+<body>
+    <h1>reCAPTCHA Example</h1>
+    <form id="myForm" action="/submit" method="POST">
+        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
+        <!-- Other form fields -->
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Le2y9IqAAAAADBBkAO5nLuAmLB7TU9S6FG0PYtU', {action: 'submit'}).then(function(token) {
+                // Log the token to the console
+                console.log('reCAPTCHA token:', token);
+                // Set the token in the hidden input field
+                document.getElementById('recaptchaToken').value = token;
+            });
+        });
+
+        // Log the form submission to the console
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            console.log('Form submitted with reCAPTCHA token:', document.getElementById('recaptchaToken').value);
+            // You can now send the form data to your server
+        });
+    </script>
+</body>
+</html>
