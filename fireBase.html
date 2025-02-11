@@ -1,35 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reCAPTCHA Example</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LezytMqAAAAACl77axkSaX6rCqPnsP0fTdEkdRi"></script>
-</head>
-<body>
-    <h1>reCAPTCHA Example</h1>
-    <form id="myForm" action="/submit" method="POST">
-        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
-        <!-- Other form fields -->
-        <button type="submit">Submit</button>
-    </form>
-
-    <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LezytMqAAAAACl77axkSaX6rCqPnsP0fTdEkdRi', {action: 'submit'}).then(function(token) {
-                // Log the token to the console
-                console.log('reCAPTCHA token:', token);
-                // Set the token in the hidden input field
-                document.getElementById('recaptchaToken').value = token;
-            });
+<html>
+  <head>
+    <title>reCAPTCHA demo: Explicit render for multiple widgets</title>
+    <script type="text/javascript">
+      var verifyCallback = function(response) {
+        //alert(response);
+        console.log(response);
+      };
+      var onloadCallback = function() {
+        grecaptcha.render('example3', {
+          'sitekey' : '6LcMZR0UAAAAALgPMcgHwga7gY5p8QMg1Hj-bmUv',
+          'callback' : verifyCallback,
+          'theme' : 'dark'
         });
-
-        // Log the form submission to the console
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            console.log('Form submitted with reCAPTCHA token:', document.getElementById('recaptchaToken').value);
-            // You can now send the form data to your server
-        });
+      };
     </script>
-</body>
+  </head>
+  <body>
+    <!-- POSTs back to the page's URL upon submit with a g-recaptcha-response POST parameter. -->
+    <form action="?" method="POST">
+      <div id="example3"></div>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+  </body>
 </html>
